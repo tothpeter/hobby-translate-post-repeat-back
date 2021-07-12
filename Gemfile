@@ -36,6 +36,7 @@ end
 group :test do
   gem 'rspec-rails', '~> 5.0.0'
   gem 'database_cleaner-active_record'
+  gem 'turnip'
 end
 
 group :development do
