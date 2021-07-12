@@ -4,7 +4,7 @@ This is the back end of a new world changer SAS app.
 
 ## Database creation
 
-rails db:create db:migrate
+rails db:prepare
 
 ## How to run the test suite
 
