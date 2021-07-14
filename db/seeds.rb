@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+tables_to_truncate = %w(users)
+
+ActiveRecord::Base.connection.execute("TRUNCATE #{tables_to_truncate.join(',')} RESTART IDENTITY")
+
+User.create! email: 'test1@test.com', password: '123123', name: 'Test1'
