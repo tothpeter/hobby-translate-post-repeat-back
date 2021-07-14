@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       registrations: 'api/registrations'
     }
 
+    resource :account, only: [:show]
+
     get 'test-auth' => 'test_auth#test'
   end
 end
