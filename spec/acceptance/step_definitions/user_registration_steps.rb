@@ -12,7 +12,7 @@ steps_for :user_registration do
       password_confirmation: '12345678'
     }
 
-    post '/auth', params: signup_params
+    post '/api/auth', params: signup_params
   end
 
   step 'create a new user' do
@@ -33,7 +33,7 @@ steps_for :user_registration do
       'access-token' => response.headers['access-token']
     }
 
-    get '/test-auth', headers: @headers
+    get '/api/test-auth', headers: @headers
   end
 
   step 'the access is granted' do

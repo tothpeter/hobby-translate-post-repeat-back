@@ -10,7 +10,7 @@ steps_for :user_registration_fails do
       email: 'invalid',
     }
 
-    post '/auth', params: signup_params
+    post '/api/auth', params: signup_params
   end
 
 

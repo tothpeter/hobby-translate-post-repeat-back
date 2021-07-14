@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 describe 'Session', type: :request do
-  SIGN_IN_URL  = '/auth/sign_in'
-  SIGN_OUT_URL = '/auth/sign_out'
+  SIGN_IN_URL  = '/api/auth/sign_in'
+  SIGN_OUT_URL = '/api/auth/sign_out'
 
   before(:each) do
     @user         = FactoryBot.create(:user)
@@ -42,7 +42,7 @@ describe 'Session', type: :request do
           'access-token' => response.headers['access-token']
         }
 
-        get '/test-auth', headers: @headers
+        get '/api/test-auth', headers: @headers
         expect(response).to have_http_status(200)
       end
     end
@@ -55,7 +55,7 @@ describe 'Session', type: :request do
           'access-token' => 'invalid'
         }
 
-        get '/test-auth', headers: @headers
+        get '/api/test-auth', headers: @headers
         expect(response).to have_http_status(401)
       end
     end

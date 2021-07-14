@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-    registrations: 'overrides/registrations'
-  }
+  namespace :api do
+    mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+      registrations: 'api/registrations'
+    }
 
-  get 'test-auth' => 'test_auth#test'
+    get 'test-auth' => 'test_auth#test'
+  end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'User registration', type: :request do
-  SIGN_UP_URL = '/auth/'
+  SIGN_UP_URL = '/api/auth/'
 
   SIGNUP_PARAMS = {
     email:                 'user@example.com',

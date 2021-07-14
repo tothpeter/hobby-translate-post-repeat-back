@@ -11,7 +11,7 @@ steps_for :user_session_end_to_end do
   end
 
   step 'he cannot access the restricted area' do
-    get '/test-auth'
+    get '/api/test-auth'
     expect(response).to have_http_status(401)
   end
 
@@ -21,7 +21,7 @@ steps_for :user_session_end_to_end do
       password: @current_user.password
     }
 
-    post '/auth/sign_in', params: login_params
+    post '/api/auth/sign_in', params: login_params
     expect(response).to have_http_status(200)
   end
 
@@ -32,18 +32,18 @@ steps_for :user_session_end_to_end do
       'access-token' => response.headers['access-token']
     }
 
-    get '/test-auth', headers: @auth_headers
+    get '/api/test-auth', headers: @auth_headers
 
     expect(response).to have_http_status(200)
   end
 
   step 'the user signs out' do
-    delete '/auth/sign_out', headers: @auth_headers
+    delete '/api/auth/sign_out', headers: @auth_headers
     expect(response).to have_http_status(200)
   end
 
   step 'he cannot access the restricted area anymore' do
-    get '/test-auth', headers: @auth_headers
+    get '/api/test-auth', headers: @auth_headers
     expect(response).to have_http_status(401)
   end
 end
