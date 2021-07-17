@@ -35,7 +35,7 @@ module Instagram::PublicWebClient
       number_of_remaining_posts_to_fetch -= fetched_posts.count
       page_info = json_data[:data][:user][:edge_owner_to_timeline_media][:page_info]
 
-      break if number_of_remaining_posts_to_fetch < 1 || !page_info[:has_next_page]
+      break unless number_of_remaining_posts_to_fetch > 0 && page_info[:has_next_page]
 
       url = "https://www.instagram.com/graphql/query/?query_hash=ea4baf885b60cbf664b34ee760397549&variables={\"id\":\"#{user_id}\",\"first\":#{number_of_remaining_posts_to_fetch},\"after\":\"#{page_info[:end_cursor]}\"}"
     end
