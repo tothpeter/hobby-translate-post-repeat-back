@@ -3,7 +3,7 @@
 require 'net/http'
 
 module Instagram::PublicWebClient
-  def self.fetch_profile(user_name)
+  def self.fetch_profile_info(user_name)
     url = "https://www.instagram.com/#{user_name}/?__a=1"
     uri = URI(url)
     response = Net::HTTP.get(uri)
@@ -12,8 +12,8 @@ module Instagram::PublicWebClient
   end
 
   def self.fetch_latest_posts_by_user_name(user_name, limit: 50)
-    profile_data = fetch_profile(user_name)
-    user_id      = profile_data[:graphql][:user][:id]
+    profile_info = fetch_profile_info(user_name)
+    user_id      = profile_info[:graphql][:user][:id]
 
     fetch_lates_posts_by_user_id(user_id, limit: limit)
   end
