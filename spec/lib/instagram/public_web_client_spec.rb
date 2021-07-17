@@ -7,7 +7,7 @@ describe Instagram::PublicWebClient do
     it 'it returns the public profile as a hash' do
       profile_info = described_class.fetch_profile_info('captain_rebel_tv')
 
-      expect(profile_info[:graphql][:user][:full_name]).to eq('Captain Rebel')
+      expect(profile_info[:full_name]).to eq('Captain Rebel')
     end
   end
 

@@ -8,12 +8,12 @@ module Instagram::PublicWebClient
     uri = URI(url)
     response = Net::HTTP.get(uri)
 
-    JSON.parse(response, symbolize_names: true)
+    JSON.parse(response, symbolize_names: true)[:graphql][:user]
   end
 
   def self.fetch_latest_posts_by_user_name(user_name, limit: 50)
     profile_info = fetch_profile_info(user_name)
-    user_id      = profile_info[:graphql][:user][:id]
+    user_id      = profile_info[:id]
 
     fetch_lates_posts_by_user_id(user_id, limit: limit)
   end
