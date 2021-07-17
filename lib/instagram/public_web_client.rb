@@ -2,8 +2,16 @@
 
 require 'net/http'
 
-module Instagram::Profile::Post
-  def self.latest_posts(user_name)
+module Instagram::PublicWebClient
+  def self.fetch_profile(user_name)
+    url = "https://www.instagram.com/#{user_name}/?__a=1"
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+
+    JSON.parse(response, symbolize_names: true)
+  end
+
+  def self.fetch_latest_posts_of(user_name)
     url = "https://www.instagram.com/#{user_name}/?__a=1"
     uri = URI(url)
     response = Net::HTTP.get(uri)
