@@ -3,8 +3,11 @@
 require 'net/http'
 
 module Instagram::PublicWebClient
+  BASE_URL             = 'https://www.instagram.com'
+  QUERY_HASH_FOR_POSTS = 'ea4baf885b60cbf664b34ee760397549'
+
   def self.fetch_profile_info(user_name)
-    url = "https://www.instagram.com/#{user_name}/?__a=1"
+    url = "#{BASE_URL}/#{user_name}/?__a=1"
     uri = URI(url)
     response = Net::HTTP.get(uri)
 
@@ -22,10 +25,9 @@ module Instagram::PublicWebClient
     posts = []
     number_of_remaining_posts_to_fetch = limit
 
-    url = "https://www.instagram.com/graphql/query/?query_hash=ea4baf885b60cbf664b34ee760397549&variables={\"id\":\"#{user_id}\",\"first\":#{number_of_remaining_posts_to_fetch}}"
+    uri = _uri_for_posts(user_id, number_of_remaining_posts_to_fetch)
 
     loop do
-      uri = URI(url)
       response = Net::HTTP.get(uri)
       json_response = JSON.parse(response, symbolize_names: true)
       posts_data = json_response[:data][:user][:edge_owner_to_timeline_media]
@@ -38,9 +40,22 @@ module Instagram::PublicWebClient
 
       break unless number_of_remaining_posts_to_fetch > 0 && page_info[:has_next_page]
 
-      url = "https://www.instagram.com/graphql/query/?query_hash=ea4baf885b60cbf664b34ee760397549&variables={\"id\":\"#{user_id}\",\"first\":#{number_of_remaining_posts_to_fetch},\"after\":\"#{page_info[:end_cursor]}\"}"
+      uri = _uri_for_posts(user_id, number_of_remaining_posts_to_fetch, page_info[:end_cursor])
     end
 
     posts
+  end
+
+  def self._uri_for_posts(user_id, limit, end_cursor = nil)
+    variables = {
+      id:    user_id,
+      first: limit
+    }
+
+    variables[:after] = end_cursor if end_cursor
+
+    url_params = "query_hash=#{QUERY_HASH_FOR_POSTS}&variables=#{variables.to_json}"
+
+    URI("#{BASE_URL}/graphql/query/?#{url_params}")
   end
 end
