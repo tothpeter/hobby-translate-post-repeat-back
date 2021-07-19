@@ -27,13 +27,14 @@ module Instagram::PublicWebClient
     loop do
       uri = URI(url)
       response = Net::HTTP.get(uri)
-      json_data = JSON.parse(response, symbolize_names: true)
+      json_response = JSON.parse(response, symbolize_names: true)
+      posts_data = json_response[:data][:user][:edge_owner_to_timeline_media]
 
-      fetched_posts = json_data[:data][:user][:edge_owner_to_timeline_media][:edges].map { |edge| edge[:node] }
+      fetched_posts = posts_data[:edges].map { |edge| edge[:node] }
       posts += fetched_posts
 
       number_of_remaining_posts_to_fetch -= fetched_posts.count
-      page_info = json_data[:data][:user][:edge_owner_to_timeline_media][:page_info]
+      page_info = posts_data[:page_info]
 
       break unless number_of_remaining_posts_to_fetch > 0 && page_info[:has_next_page]
 
