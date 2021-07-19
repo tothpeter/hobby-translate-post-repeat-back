@@ -12,7 +12,7 @@ Feature: User registration
       Then the access is granted
 
   @user_registration_fails
-  Scenario: User registers with wrong params
+  Scenario: User can't register with wrong input data
     Background:
       Given no user in the system
     When the user sends a registration request
