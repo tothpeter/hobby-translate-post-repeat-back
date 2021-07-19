@@ -6,7 +6,8 @@ Feature: User registration
       Given no user in the system
     When the user sends a registration request
       Then create a new user
-      Then return the necesary auth data for the client
+      And return the auth data
+      And return the user data
     When the user requests a restricted resource
       Then the access is granted
 

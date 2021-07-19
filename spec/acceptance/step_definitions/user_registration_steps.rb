@@ -25,11 +25,16 @@ steps_for :user_registration do
     expect(new_user.nickname).to eq('Nickname')
   end
 
-  step 'return the necesary auth data for the client' do
+  step 'return the auth data' do
     expect(response.headers['uid']).to be_present
     expect(response.headers['client']).to be_present
     expect(response.headers['access-token']).to be_present
     expect(response).to have_http_status(200)
+  end
+
+  step 'return the user data' do
+    expect(json_response[:data][:email]).to eq('user@example.com')
+    expect(json_response[:data][:name]).to eq('Test Name')
   end
 
   step 'the user requests a restricted resource' do
