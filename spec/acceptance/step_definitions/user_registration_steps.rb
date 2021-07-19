@@ -9,14 +9,20 @@ steps_for :user_registration do
     signup_params = {
       email:                 'user@example.com',
       password:              '12345678',
-      password_confirmation: '12345678'
+      password_confirmation: '12345678',
+      name:                  'Test Name',
+      nickname:              'Nickname'
     }
 
     post '/api/auth', params: signup_params
   end
 
   step 'create a new user' do
-    expect(User.last.email).to eq('user@example.com')
+    new_user = User.last
+
+    expect(new_user.email).to eq('user@example.com')
+    expect(new_user.name).to eq('Test Name')
+    expect(new_user.nickname).to eq('Nickname')
   end
 
   step 'return the necesary auth data for the client' do
