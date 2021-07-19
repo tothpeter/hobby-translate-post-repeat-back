@@ -16,3 +16,4 @@ Feature: User registration
       Given no user in the system
     When the user sends a registration request
       Then the request is denied
+      And return the validaiton errors
