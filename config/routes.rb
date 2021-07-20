@@ -6,6 +6,10 @@ Rails.application.routes.draw do
       registrations: 'api/registrations'
     }
 
+    resources :instagram_profiles, except: :create do
+      post :import, on: :collection
+    end
+
     resource :account, only: [:show]
 
     get 'test-auth' => 'test_auth#test'

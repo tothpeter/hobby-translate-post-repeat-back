@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_013454) do
+ActiveRecord::Schema.define(version: 2021_07_19_232752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "instagram_profiles", force: :cascade do |t|
+    t.string "external_id"
+    t.string "user_name"
+    t.string "full_name"
+    t.string "number_of_posts"
+    t.string "number_of_followers"
+    t.string "profile_pic_url"
+    t.json "full_info"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
