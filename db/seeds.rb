@@ -6,8 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-tables_to_truncate = %w(users)
+tables_to_truncate = %w(users instagram_profiles)
 
+puts "Truncate tables: #{tables_to_truncate.join(', ')}"
 ActiveRecord::Base.connection.execute("TRUNCATE #{tables_to_truncate.join(',')} RESTART IDENTITY")
 
+puts 'Create test user'
 User.create! email: 'test1@test.com', password: '123123', name: 'Test1'
+
+puts 'Import Instagram profile: jamesaspey'
+Instagram.import_profile!('jamesaspey')
+
+puts 'Import Instagram profile: veganalysis'
+Instagram.import_profile!('veganalysis')
