@@ -9,19 +9,19 @@ class Api::InstagramProfilesController < ApplicationController
   end
 
   def show
-    render json: @instagram_profile
+    render json: InstagramProfileSerializer.render(@instagram_profile)
   end
 
   def import
     user_name = params.require(:user_name)
     new_instagram_profile = Instagram.import_profile!(user_name)
 
-    render json: new_instagram_profile, status: :created
+    render json: InstagramProfileSerializer.render(new_instagram_profile), status: :created
   end
 
   def update
     if @instagram_profile.update(update_instagram_profile_params)
-      render json: @instagram_profile
+      render json: InstagramProfileSerializer.render(@instagram_profile)
     else
       render json: { errors: @instagram_profile.errors }, status: :unprocessable_entity
     end
