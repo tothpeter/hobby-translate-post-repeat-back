@@ -15,7 +15,7 @@ describe Instagram::PublicWebClient do
 
   describe 'Fetching limited posts of a given profile', vcr: vcr_options do
     it 'returns the posts' do
-      posts = described_class.fetch_latest_posts_by_user_name('captain_rebel_tv', limit: 130)
+      posts = described_class.latest_posts_by_user_name('captain_rebel_tv', limit: 130)
 
       expect(posts.count).to eq(130)
       expect(posts.first[:id]).to eq('2618499570550571667')
