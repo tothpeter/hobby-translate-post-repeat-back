@@ -15,5 +15,15 @@ FactoryBot.define do
         }
       }
     end
+
+    trait :existing1 do
+      external_id { '3231033489' }
+      user_name { 'captain_rebel_tv' }
+    end
+
+    trait :existing2 do
+      external_id { '1704794933' }
+      user_name { 'vegan_sarcasm' }
+    end
   end
 end
