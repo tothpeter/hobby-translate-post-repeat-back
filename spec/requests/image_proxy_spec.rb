@@ -12,6 +12,7 @@ describe 'GET /image-proxy' do
     expect(response).to be_successful
     expect(response.headers['Content-Type']).to eq('image/jpeg')
     expect(response.headers['Content-Disposition']).to be_nil
+    expect(response.headers['Cache-Control']).to eq("max-age=#{2.years}, public")
     expect(response.body).to be_present
   end
 end
